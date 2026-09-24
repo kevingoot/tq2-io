@@ -29,7 +29,11 @@ h2 { font-size: 18px; color: var(--gold); margin: 28px 0 10px; }
 .lede { color: var(--muted); max-width: 62ch; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
 .card { background: var(--panel); border: 1px solid var(--line); padding: 14px; border-radius: 6px; }
-.card h3 { margin: 0 0 6px; font-size: 16px; }
+.card h3 { margin: 4px 0 6px; font-size: 16px; }
+.card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.pill.act { background: #2a241c; color: var(--gold); }
+.muted-list { color: var(--muted); max-width: 72ch; line-height: 1.55; }
+.r-stub, .r-verify { color: #1c1400; background: #a8a29e; }
 .meta { color: var(--muted); font-size: 12px; }
 .pill { display: inline-block; font-size: 11px; padding: 2px 7px; border-radius: 99px; margin-right: 4px; }
 .r-epic { color: #1a1024; background: var(--epic); }
