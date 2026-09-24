@@ -118,6 +118,13 @@ window.TQ2 = {
     { id: "essence-hera-scepter", name: "Hera's Scepter (essence)", rarity: "named-essence", slot: "relic" },
     { id: "essence-typhon-fang", name: "Essence of Typhon's Serpentine Fang", rarity: "named-essence", slot: "relic" },
     { id: "essence-iron-will-ajax", name: "Essence of Iron Will of Ajax", rarity: "named-essence", slot: "relic" },
-    { id: "empowered-pyromancer-sword", name: "Empowered Essence Sword of the Pyromancer", rarity: "off-table", slot: "sword", notes: "Off-table bird on Pan 55 +0." }
+    { id: "empowered-pyromancer-sword", name: "Empowered Essence Sword of the Pyromancer", rarity: "off-table", slot: "sword", notes: "Off-table bird on Pan 55 +0. Rolled Essence Sword — see base page." },
+    { id: "essence-sword", name: "Essence Sword", rarity: "infrequent", slot: "sword", notes: "Base infrequent. One page for the base, not each roll. Observed rolls: of Wisdom, of Clarity, of Excellence, of the Invoker (Hippokampos 55 +0); Empowered of the Pyromancer (Pan pile, off-table)." },
+    { id: "sharptooth-greaves", name: "Sharptooth Greaves", rarity: "infrequent", slot: "boots", notes: "Base infrequent. Observed roll: Unscorched Sharptooth Greaves of Sanctuary (Hippokampos 55 +0 pile)." },
+    { id: "benthic-wand", name: "Benthic Wand", rarity: "infrequent", slot: "wand", notes: "Base infrequent. Observed roll: Empowered Benthic Wand of Precision (Hippokampos 55 +0 pile)." },
+    { id: "studded-spirit-scepter", name: "Studded Spirit Scepter", rarity: "infrequent", slot: "scepter", notes: "Base infrequent. Observed rolls: Tormenting of Knowledge, Freezing of Wisdom (Hippokampos 55 +0 pile)." },
+    { id: "star-mace", name: "Star Mace", rarity: "infrequent", slot: "mace", notes: "Base infrequent. Observed roll: Piercing Star Mace of Zelus (Hippokampos 55 +0 pile)." },
+    { id: "fume-scepter", name: "Fume Scepter", rarity: "infrequent", slot: "scepter", notes: "Base infrequent. Observed roll: Venomous Fume Scepter of Crippling (Hippokampos 55 +0 pile)." },
+    { id: "force-crescent-staff", name: "Force Crescent Staff", rarity: "infrequent", slot: "staff", notes: "Base infrequent. Observed roll: Invoker's Force Crescent Staff of Clarity (Hippokampos 55 +0 pile)." }
   ]
 };
