@@ -4,7 +4,7 @@
   const q = document.getElementById("q");
   const itemById = Object.fromEntries(D.items.map((i) => [i.id, i]));
   function rate(count, kills) {
-    if (!kills) return "—";
+    if (!kills) return "\u2014";
     return (count / kills * 100).toFixed(1) + "% (" + count + "/" + kills + ")";
   }
   function itemLink(id) {
@@ -12,26 +12,48 @@
     if (!it) return id;
     return '<a class="item-name ' + it.rarity + '" href="#/item/' + it.id + '">' + it.name + "</a>";
   }
+  function sampleOf(b) { return (b.samples && b.samples[0]) || null; }
+  function statusOf(b) {
+    const s = sampleOf(b);
+    if (s) return s.status;
+    return b.kind === "verify" ? "verify" : "stub";
+  }
+  function bossCard(b) {
+    const s = sampleOf(b);
+    const st = statusOf(b);
+    return `<a class="card" href="#/boss/${b.id}">
+      <div class="card-top"><span class="pill act">Act ${b.act}</span>
+      <span class="pill r-${st === "closed" ? "named" : st === "open" ? "infreq" : st === "verify" ? "off" : "gold"}">${st}</span></div>
+      <h3>${b.name}</h3>
+      <div class="meta">${b.title || ""}</div>
+      <div class="meta">${s ? (s.label + " \u00b7 " + s.kills + " kills") : (b.remnantConfirmed ? "remnant confirmed \u00b7 no sample" : "remnant unconfirmed")}</div>
+      ${s && s.gold ? `<div class="meta">Gold ${s.gold}</div>` : ""}
+    </a>`;
+  }
+  function bossesByAct() {
+    const acts = {};
+    D.bosses.forEach((b) => {
+      const key = b.actName || ("Act " + b.act);
+      (acts[key] = acts[key] || []).push(b);
+    });
+    return acts;
+  }
   function home() {
-    const closed = D.bosses.flatMap((b) => b.samples).filter((s) => s.status === "closed");
-    const open = D.bosses.flatMap((b) => b.samples).filter((s) => s.status !== "closed");
+    const samples = D.bosses.flatMap((b) => b.samples || []);
+    const closed = samples.filter((s) => s.status === "closed");
+    const open = samples.filter((s) => s.status === "open");
+    const acts = bossesByAct();
     return `<h1>Titan Quest 2 database</h1>
-      <p class="lede">Searchable items and <em>observed</em> remnant drop tables. Cap ${D.meta.cap}, ${D.meta.chapter}, updated ${D.meta.updated}.</p>
+      <p class="lede">Observed remnant drop tables. Cap ${D.meta.cap}, ${D.meta.chapter}, updated ${D.meta.updated}.</p>
       <div class="statrow">
         <div class="stat"><b>${D.items.length}</b>catalogued items</div>
-        <div class="stat"><b>${D.bosses.length}</b>boss tables</div>
+        <div class="stat"><b>${D.bosses.length}</b>boss stubs</div>
         <div class="stat"><b>${closed.reduce((a,s)=>a+s.kills,0)}</b>closed-sample kills</div>
         <div class="stat"><b>${open.reduce((a,s)=>a+s.kills,0)}</b>open-sample kills</div>
       </div>
-      <h2>Farms</h2>
-      <div class="grid">
-        ${D.bosses.map((b) => {
-          const s = b.samples[0];
-          return `<a class="card" href="#/boss/${b.id}"><h3>${b.name}</h3><div class="meta">${s.label} · ${s.kills} kills · ${s.status}</div><div class="meta">Gold ${s.gold}</div></a>`;
-        }).join("")}
-      </div>
-      <h2>Why this exists</h2>
-      <p class="lede">Wikis list unique names. They do not publish n-kill remnant tables, gold bands, named-essence counts, or off-table flags.</p>`;
+      ${Object.entries(acts).map(([name, list]) => `<h2>${name}</h2><div class="grid">${list.map(bossCard).join("")}</div>`).join("")}
+      <h2>Not remnant tables</h2>
+      <ul class="muted-list">${(D.excluded || []).map((e) => `<li><strong>${e.name}</strong> \u2014 ${e.reason}</li>`).join("")}</ul>`;
   }
   function itemsView(filter) {
     let list = D.items;
@@ -47,35 +69,47 @@
     const i = itemById[id];
     if (!i) return "<p>Unknown item.</p>";
     const sources = [];
-    D.bosses.forEach((b) => b.samples.forEach((s) => {
+    D.bosses.forEach((b) => (b.samples || []).forEach((s) => {
       (s.drops || []).forEach((d) => { if (d.item === id) sources.push({ boss: b, sample: s, drop: d }); });
     }));
     return `<p class="meta"><a href="#/items">Items</a></p>
       <h1 class="item-name ${i.rarity}">${i.name}</h1>
-      <p><span class="pill r-${i.rarity.startsWith("epic")?"epic":i.rarity}">${i.rarity}</span> ${i.slot||""} ${i.unique?"· unique":""}</p>
+      <p><span class="pill r-${i.rarity.startsWith("epic")?"epic":i.rarity}">${i.rarity}</span> ${i.slot||""} ${i.unique?"\u00b7 unique":""}</p>
       ${i.notes?`<p class="lede">${i.notes}</p>`:""}
       ${i.mods?`<ul class="mods">${i.mods.map((m)=>`<li>${m}</li>`).join("")}</ul>`:""}
       <h2>Observed sources</h2>
       ${sources.length?`<table><thead><tr><th>Boss</th><th>Sample</th><th>Rate</th></tr></thead><tbody>
-        ${sources.map((s)=>`<tr><td><a href="#/boss/${s.boss.id}">${s.boss.name}</a></td><td>${s.sample.label} (${s.sample.kills})</td><td>${rate(s.drop.count,s.sample.kills)}${s.drop.flag?" · "+s.drop.flag:""}</td></tr>`).join("")}
+        ${sources.map((s)=>`<tr><td><a href="#/boss/${s.boss.id}">${s.boss.name}</a></td><td>${s.sample.label} (${s.sample.kills})</td><td>${rate(s.drop.count,s.sample.kills)}${s.drop.flag?" \u00b7 "+s.drop.flag:""}</td></tr>`).join("")}
       </tbody></table>`:"<p class='meta'>No remnant sample attached yet.</p>"}`;
   }
   function dropsView() {
-    return `<h1>Drop tables</h1><p class="lede">One page per boss. Do not mix remnant tables. +0 and +3 are separate samples.</p>
-      <div class="grid">${D.bosses.map((b)=>{const s=b.samples[0];return `<a class="card" href="#/boss/${b.id}"><h3>${b.name}</h3><div class="meta">${s.kills} kills · ${s.status} · ${s.label}</div></a>`;}).join("")}</div>`;
+    const acts = bossesByAct();
+    return `<h1>Drop tables</h1>
+      <p class="lede">One page per boss. Never mix remnant tables. +0 and +3 are separate samples.</p>
+      ${Object.entries(acts).map(([name, list]) => `<h2>${name}</h2><div class="grid">${list.map(bossCard).join("")}</div>`).join("")}
+      <h2>Not remnant tables</h2>
+      <ul class="muted-list">${(D.excluded || []).map((e) => `<li><strong>${e.name}</strong> \u2014 ${e.reason}</li>`).join("")}</ul>`;
   }
   function bossView(id) {
     const b = D.bosses.find((x)=>x.id===id);
     if (!b) return "<p>Unknown boss.</p>";
-    const s = b.samples[0];
-    return `<p class="meta"><a href="#/drops">Drops</a></p>
+    const s = sampleOf(b);
+    if (!s) {
+      return `<p class="meta"><a href="#/drops">Drops</a> \u00b7 Act ${b.act}</p>
       <h1>${b.name}</h1>
-      <p class="lede">Remnant: ${b.remnant} · ${b.zone} · sample ${s.label} · <strong>${s.status}</strong> at ${s.kills} kills (${s.date}).</p>
+      <p class="lede">${b.title||""} \u00b7 ${b.zone} \u00b7 ${b.kind}</p>
+      <p>Remnant: <strong>${b.remnant}</strong> ${b.remnantConfirmed?'<span class="pill r-named">confirmed</span>':'<span class="pill r-off">needs confirm</span>'}</p>
+      ${b.notes?`<p class="lede">${b.notes}</p>`:""}
+      <p class="warn">No sample yet. Dedicated chat when you start the 100-kill pass.</p>`;
+    }
+    return `<p class="meta"><a href="#/drops">Drops</a> \u00b7 Act ${b.act}</p>
+      <h1>${b.name}</h1>
+      <p class="lede">Remnant: ${b.remnant} \u00b7 ${b.zone} \u00b7 sample ${s.label} \u00b7 <strong>${s.status}</strong> at ${s.kills} kills (${s.date}).</p>
       <div class="statrow">
         <div class="stat"><b>${s.kills}</b>kills</div>
-        <div class="stat"><b>${s.epics??"—"}</b>epics</div>
-        <div class="stat"><b>${s.infrequents??"—"}</b>infrequents</div>
-        <div class="stat"><b>${s.namedEssences??"—"}</b>named essences</div>
+        <div class="stat"><b>${s.epics??"\u2014"}</b>epics</div>
+        <div class="stat"><b>${s.infrequents??"\u2014"}</b>infrequents</div>
+        <div class="stat"><b>${s.namedEssences??"\u2014"}</b>named essences</div>
         <div class="stat"><b>${s.gold}</b>gold</div>
       </div>
       <p class="lede">${s.notes||""}</p>
@@ -92,7 +126,7 @@
       <p class="warn">Stub trees. Nodes marked wip need an in-client screenshot pass.</p>
       <div class="filters">${D.masteries.map((x)=>`<a href="#/skills/${x.id}"><button class="${x.id===m.id?"on":""}">${x.name}</button></a>`).join("")}</div>
       <h2>${m.name} <span class="meta">${m.tag}</span></h2>
-      <div class="tree">${nodes.map((n)=>`<div class="node ${n.type==="wip"?"":"active"}"><div class="tier">T${n.tier} · ${n.type}</div><strong>${n.name}</strong><div class="meta">${n.note||""}</div></div>`).join("")}</div>
+      <div class="tree">${nodes.map((n)=>`<div class="node ${n.type==="wip"?"":"active"}"><div class="tier">T${n.tier} \u00b7 ${n.type}</div><strong>${n.name}</strong><div class="meta">${n.note||""}</div></div>`).join("")}</div>
       <h2>Dual-mastery classes</h2>
       <div class="grid">${D.classes.map((c)=>`<div class="card"><h3>${c.name}</h3><div class="meta">${c.a} + ${c.b}</div></div>`).join("")}</div>`;
   }
