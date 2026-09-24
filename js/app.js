@@ -86,7 +86,7 @@
     const mods = n.mods ? `<ul class="mods">${n.mods.map((x)=>`<li>${x}</li>`).join("")}</ul>` : "";
     const feats = n.feats ? `<div class="meta">Feats: ${n.feats}</div>` : "";
     const stats = [n.tags, n.cost && ("Cost " + n.cost), n.cd && ("CD " + n.cd)].filter(Boolean).join(" \u00b7 ");
-    return `<button class="sk ${kind}" type="button" data-skill="${n.name}"><span class="sk-icon">${initials(n.name)}</span><span class="sk-name">${n.name}</span><div class="sk-tip"><strong>${n.name}</strong><div class="meta">${stats}</div><div class="meta">${n.note||""}</div>${feats}${mods}</div></button>`;
+    return `<button class="sk ${kind}" type="button" data-skill="${n.name}"><span class="sk-icon">${initials(n.name)}</span><span class="sk-name">${n.name}</span><div class="sk-hover"><strong>${n.name}</strong><div class="meta">${n.note||""}</div></div><div class="sk-full"><strong>${n.name}</strong><div class="meta">${stats}</div><div class="meta">${n.note||""}</div>${feats}${mods}</div></button>`;
   }
   function skillsView(mid) {
     const m = D.masteries.find((x)=>x.id===mid)||D.masteries[0];
@@ -97,7 +97,7 @@
     const actRows = (raw && raw.layout && raw.layout.actives) || [actives.slice(0,2).map(n=>n.name),actives.slice(2,5).map(n=>n.name),actives.slice(5,8).map(n=>n.name),actives.slice(8).map(n=>n.name)];
     const pasRows = (raw && raw.layout && raw.layout.passives) || (function(){const rows=[]; for(let i=0;i<passives.length;i+=5) rows.push(passives.slice(i,i+5).map(n=>n.name)); return rows;})();
     const board = (actives.length || passives.length) ? `<div class="board mastery"><div class="tier-rail"><span>IV</span><span>III</span><span>II</span><span>I</span></div><div class="act-tree">${actRows.map((row)=>`<div class="act-row">${row.map((name)=>skillNode(byName[name]||{name:name,type:"active"})).join("")}</div>`).join("")}</div><div class="pas-tree">${pasRows.map((row)=>`<div class="pas-row cols-${row.length}">${row.map((name)=>skillNode(byName[name]||{name:name,type:"passive"})).join("")}</div>`).join("")}</div></div>` : "<p class='meta'>No nodes logged.</p>";
-    return `<h1>Skill trees</h1><p class="warn">Click a node to pin modifiers.</p><div class="filters">${D.masteries.map((x)=>`<a href="#/skills/${x.id}"><button class="${x.id===m.id?"on":""}">${x.name}</button></a>`).join("")}</div><h2>${m.name} <span class="meta">${m.tag}</span></h2>${raw && raw.source ? `<p class="meta">${raw.source}</p>` : ""}${board}<div id="skill-detail" class="skill-detail"><p class="meta">Click a skill to pin it. Modifiers stay on this panel.</p></div><h2>Dual-mastery classes</h2><div class="grid">${D.classes.map((c)=>`<div class="card"><h3>${c.name}</h3><div class="meta">${c.a} + ${c.b}</div></div>`).join("")}</div>`;
+    return `<h1>Skill trees</h1><p class="warn">Hover for the short effect. Click to pin the full modifier list.</p><div class="filters">${D.masteries.map((x)=>`<a href="#/skills/${x.id}"><button class="${x.id===m.id?"on":""}">${x.name}</button></a>`).join("")}</div><h2>${m.name} <span class="meta">${m.tag}</span></h2>${raw && raw.source ? `<p class="meta">${raw.source}</p>` : ""}${board}<div id="skill-detail" class="skill-detail"><p class="meta">Click a skill to pin it. Modifiers stay on this panel.</p></div><h2>Dual-mastery classes</h2><div class="grid">${D.classes.map((c)=>`<div class="card"><h3>${c.name}</h3><div class="meta">${c.a} + ${c.b}</div></div>`).join("")}</div>`;
   }
   function bindSkillPins() {
     const panel = document.getElementById("skill-detail");
@@ -109,7 +109,7 @@
         app.querySelectorAll("button.sk.open").forEach((x) => x.classList.remove("open"));
         if (was) { panel.innerHTML = '<p class="meta">Click a skill to pin it. Modifiers stay on this panel.</p>'; return; }
         btn.classList.add("open");
-        const tip = btn.querySelector(".sk-tip");
+        const tip = btn.querySelector(".sk-full");
         panel.innerHTML = tip ? tip.innerHTML : "";
         panel.scrollIntoView({ block: "nearest" });
       });
