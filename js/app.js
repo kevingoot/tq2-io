@@ -160,11 +160,22 @@
     const raw = D.skills[m.id];
     const actives = Array.isArray(raw) ? raw.filter((n)=>n.type!=="passive") : ((raw && raw.actives) || []);
     const passives = Array.isArray(raw) ? raw.filter((n)=>n.type==="passive") : ((raw && raw.passives) || []);
-    const cols = [[],[],[],[]];
-    passives.forEach((n,i) => cols[i % 4].push(n));
-    const board = (actives.length || passives.length) ? `<div class="board">${actives.length?`<div class="board-rail">${actives.map(skillNode).join("")}</div>`:""}${passives.length?`<div class="board-cols">${["I","II","III","IV"].map((lab,i)=>`<div class="board-col"><h3>${lab}</h3>${cols[i].map(skillNode).join("")}</div>`).join("")}</div>`:""}</div>` : "<p class='meta'>No nodes logged.</p>";
+    const byName = {};
+    actives.concat(passives).forEach((n) => { byName[n.name] = n; });
+    const actRows = (raw && raw.layout && raw.layout.actives) || [
+      actives.slice(0, 2).map((n) => n.name),
+      actives.slice(2, 5).map((n) => n.name),
+      actives.slice(5, 8).map((n) => n.name),
+      actives.slice(8).map((n) => n.name)
+    ];
+    const pasRows = (raw && raw.layout && raw.layout.passives) || (function () {
+      const rows = [];
+      for (let i = 0; i < passives.length; i += 5) rows.push(passives.slice(i, i + 5).map((n) => n.name));
+      return rows;
+    })();
+    const board = (actives.length || passives.length) ? `<div class="board mastery"><div class="tier-rail"><span>IV</span><span>III</span><span>II</span><span>I</span></div><div class="act-tree">${actRows.map((row) => `<div class="act-row">${row.map((name) => skillNode(byName[name] || { name: name, type: "active" })).join("")}</div>`).join("")}</div><div class="pas-tree">${pasRows.map((row) => `<div class="pas-row cols-${row.length}">${row.map((name) => skillNode(byName[name] || { name: name, type: "passive" })).join("")}</div>`).join("")}</div></div>` : "<p class='meta'>No nodes logged.</p>";
     return `<h1>Skill trees</h1>
-      <p class="warn">Schematic of the client tree. Hover a node for modifiers. Overview shot needed to snap positions 1:1.</p>
+      <p class="warn">Rogue slots locked from your board callouts. Hover a node for modifiers.</p>
       <div class="filters">${D.masteries.map((x)=>`<a href="#/skills/${x.id}"><button class="${x.id===m.id?"on":""}">${x.name}</button></a>`).join("")}</div>
       <h2>${m.name} <span class="meta">${m.tag}</span></h2>
       ${raw && raw.source ? `<p class="meta">${raw.source}</p>` : ""}
