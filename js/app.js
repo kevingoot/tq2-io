@@ -31,7 +31,7 @@
     return `<div class="statrow">
         <div class="stat"><b>${s.kills}</b>total runs</div>
         <div class="stat"><b>${uniqueRate(s)}</b>uniques dropped</div>
-        <div class="stat"><b>${infreqRate(s)}</b>infrequents dropped${s.infrequentAttribution==="zone-likely"?"<div class=\"meta\">likely zone / world</div>":""}</div>
+        <div class="stat"><b>${infreqRate(s)}</b>infrequents dropped${s.infrequentAttribution==="zone-likely"?"<div class=\\"meta\\">likely zone / world</div>":""}</div>
         <div class="stat"><b>${s.gold || "\u2014"}</b>avg gold / band</div>
         <div class="stat"><b>${s.namedEssences ?? "\u2014"}</b>named essences</div>
       </div>
@@ -88,7 +88,7 @@
     if (filter && filter !== "all") list = list.filter((i) => i.rarity === filter);
     return `<h1>Items</h1>
       <div class="filters">${["all","epic","named-essence","infrequent","off-table"].map((f) =>
-        `<button data-f="${f}" class="${(!filter && f==="all") || filter===f ? "on":""}">${f}</button>`).join("")}</div>
+        `<a href="#/items/${f}"><button data-f="${f}" class="${(!filter || filter==="all") && f==="all" || filter===f ? "on":""}">${f}</button></a>`).join("")}</div>
       <table><thead><tr><th>Name</th><th>Rarity</th><th>Slot</th><th>Notes</th></tr></thead><tbody>
       ${list.map((i) => `<tr><td>${itemLink(i.id)}</td><td><span class="pill r-${i.rarity.startsWith("epic")?"epic":i.rarity}">${i.rarity}</span></td><td>${i.slot||""}</td><td class="meta">${i.notes||""}</td></tr>`).join("")}
       </tbody></table>`;
@@ -187,16 +187,20 @@
     const hash = location.hash.slice(2) || "";
     const [route, arg] = hash.split("/");
     if (!route) app.innerHTML = home();
-    else if (route === "items") app.innerHTML = itemsView();
+    else if (route === "items") app.innerHTML = itemsView(arg || "all");
     else if (route === "item") app.innerHTML = itemView(arg);
     else if (route === "drops") app.innerHTML = dropsView();
     else if (route === "boss") app.innerHTML = bossView(arg);
     else if (route === "skills") app.innerHTML = skillsView(arg);
     else app.innerHTML = home();
-    app.querySelectorAll(".filters button[data-f]").forEach((btn) => {
-      btn.onclick = () => { app.innerHTML = itemsView(btn.dataset.f); };
-    });
   }
+  document.querySelectorAll('header nav a[href="#/items"]').forEach((a) => {
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (location.hash === "#/items" || location.hash === "#/items/all") render();
+      else location.hash = "#/items";
+    });
+  });
   q.addEventListener("input", () => {
     const term = q.value.trim().toLowerCase();
     let box = document.getElementById("results");
