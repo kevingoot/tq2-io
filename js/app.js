@@ -31,7 +31,7 @@
     return `<div class="statrow">
         <div class="stat"><b>${s.kills}</b>total runs</div>
         <div class="stat"><b>${uniqueRate(s)}</b>uniques dropped</div>
-        <div class="stat"><b>${infreqRate(s)}</b>infrequents dropped${s.infrequentAttribution==="zone-likely"?"<div class=\\"meta\\">likely zone / world</div>":""}</div>
+        <div class="stat"><b>${infreqRate(s)}</b>infrequents dropped${s.infrequentAttribution==="zone-likely"?'<div class="meta">likely zone / world</div>':""}</div>
         <div class="stat"><b>${s.gold || "\u2014"}</b>avg gold / band</div>
         <div class="stat"><b>${s.namedEssences ?? "\u2014"}</b>named essences</div>
       </div>
