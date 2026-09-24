@@ -62,14 +62,14 @@ window.TQ2 = {
     { id: "ixion", name: "Ixion", title: "Centaur patriarch", act: 3, actName: "Act 3 \u2014 Arkadian Plains", remnant: "unlogged", remnantConfirmed: false, zone: "Arkadian Plains", kind: "story", notes: "User melted Ixion. Centaurus is his son. Confirm remnant + Memory Knot.", samples: [] },
     { id: "skirion", name: "Skirion", title: "unverified Ch3 farm target", act: 3, actName: "Act 3 \u2014 Arkadian Plains", remnant: "unlogged", remnantConfirmed: false, zone: "unlogged", kind: "verify", notes: "Named in a Ch3 farm-priority comment. Confirm or cut.", samples: [] },
     { id: "first-boarman", name: "First Boarman", title: "Buried-city patriarch", act: 4, actName: "Act 4 \u2014 Wild Lands", remnant: "unlogged", remnantConfirmed: false, zone: "Ancient buried city", kind: "story", notes: "Official Ch4 beat. Confirm remnant.", samples: [] },
-    { id: "centaurus", name: "Centaurus", title: "King of the centaurs", act: 4, actName: "Act 4 \u2014 Wild Lands", remnant: "unlogged", remnantConfirmed: false, zone: "Wild Lands / centaur camps", kind: "story", notes: "Ch4 story beat after Ixion. Confirm remnant.", samples: [] },
-    { id: "nemesis-temple", name: "Temple of Nemesis", title: "Ch4 chapter encounter", act: 4, actName: "Act 4 \u2014 Wild Lands", remnant: "unlogged", remnantConfirmed: false, zone: "Temple of Nemesis", kind: "verify", notes: "May be a remnant boss or a story set-piece. Confirm name + knot.", samples: [] }
+    { id: "centaurus", name: "Centaurus", title: "King of the centaurs", act: 4, actName: "Act 4 \u2014 Wild Lands", remnant: "unlogged", remnantConfirmed: false, zone: "Temple of Nemesis", kind: "story", notes: "Temple of Nemesis is the real Centaurus fight after a fake. Log the real kill only. Confirm remnant + Memory Knot.", samples: [] }
   ],
   excluded: [
     { name: "Appollonia the Terrible", reason: "Prologue gryphon. No remnant \u2014 cannot return to prologue." },
     { name: "Tauros", reason: "Optional in Moirai. No remnant item listed." },
     { name: "Klepton", reason: "Optional in Moirai. Stopped spawning after Ch3." },
-    { name: "Mother Crab", reason: "Quest elite. Later secret crab is non-respawnable." }
+    { name: "Mother Crab", reason: "Quest elite. Later secret crab is non-respawnable." },
+    { name: "Fake Centaurus", reason: "Decoy before the real Temple of Nemesis fight. Do not log as a remnant table." }
   ],
   items: [
     { id: "hippokampos-scapula", name: "Hippokampos Scapula", rarity: "epic", slot: "2H axe", unique: true, notes: "Lv55 rolls: 245-271 base, +1 Primary Attack capacity, RSV 366.", mods: ["Cold + poison + strike mix", "+1 Primary Attack capacity"] },
