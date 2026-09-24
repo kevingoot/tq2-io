@@ -66,6 +66,12 @@ details.ares table th:nth-child(3), details.ares table td:nth-child(3) { width: 
 .node.active { border-color: #b45309; }
 .node .tier { font-size: 11px; color: var(--muted); }
 .board { background: radial-gradient(ellipse at 50% 0%, #2a2218 0%, transparent 55%), linear-gradient(#14110d, #0c0b09); border: 1px solid #3a3228; border-radius: 10px; padding: 16px 14px 22px; margin: 12px 0 28px; }
+.mastery { display: grid; grid-template-columns: 28px minmax(200px, 1fr) minmax(280px, 1.45fr); gap: 8px 14px; align-items: stretch; }
+.tier-rail { display: flex; flex-direction: column; justify-content: space-between; color: var(--gold); font-size: 11px; letter-spacing: .12em; padding: 10px 0; }
+.act-tree { display: flex; flex-direction: column-reverse; justify-content: space-between; gap: 6px; }
+.act-row, .pas-row { display: flex; justify-content: center; gap: 6px; }
+.pas-tree { display: flex; flex-direction: column; justify-content: space-between; gap: 6px; }
+.pas-row.cols-2 { padding: 0 16%; }
 .board-rail { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 18px; }
 .board-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
 .board-col h3 { margin: 0 0 10px; text-align: center; font-size: 12px; letter-spacing: .14em; color: var(--gold); }
@@ -79,7 +85,7 @@ details.ares table th:nth-child(3), details.ares table td:nth-child(3) { width: 
 .sk:hover .sk-tip, .sk:focus .sk-tip { display: block; }
 .sk-tip strong { color: var(--gold); }
 .sk-tip .mods { margin: 6px 0 0; font-size: 12px; }
-@media (max-width: 800px) { .board-rail, .board-cols { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 800px) { .mastery { grid-template-columns: 24px 1fr; } .pas-tree { grid-column: 1 / -1; } }
 .warn { color: #f59e0b; font-size: 13px; }
 .boss-head h1 { font-size: 34px; letter-spacing: .02em; }
 .boss-hero { display: grid; grid-template-columns: 280px 1fr; gap: 18px; margin: 18px 0 22px; }
