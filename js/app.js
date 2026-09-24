@@ -145,24 +145,30 @@
       <details class="ares"><summary>Ares +3 modifier trial</summary>${dropTable(s3)}</details>
       <details class="ares"><summary>Ares +5 maximum difficulty</summary>${dropTable(s5)}</details>`;
   }
-  function skillCard(n) {
+  function initials(name) {
+    return name.split(/\s+/).map((w) => w[0]).join("").slice(0, 3).toUpperCase();
+  }
+  function skillNode(n) {
+    const kind = n.type === "passive" ? "passive-skill" : n.type === "sustained" ? "sustained active-skill" : "active-skill";
     const mods = n.mods ? `<ul class="mods">${n.mods.map((x)=>`<li>${x}</li>`).join("")}</ul>` : "";
     const feats = n.feats ? `<div class="meta">Feats: ${n.feats}</div>` : "";
     const stats = [n.tags, n.cost && ("Cost " + n.cost), n.cd && ("CD " + n.cd)].filter(Boolean).join(" \u00b7 ");
-    return `<div class="node ${n.type==="wip"?"":"active"}"><div class="tier">${n.type||""}${stats?" \u00b7 "+stats:""}</div><strong>${n.name}</strong><div class="meta">${n.note||""}</div>${feats}${mods}</div>`;
+    return `<button class="sk ${kind}" type="button"><span class="sk-icon">${initials(n.name)}</span><span class="sk-name">${n.name}</span><div class="sk-tip"><strong>${n.name}</strong><div class="meta">${stats}</div><div class="meta">${n.note||""}</div>${feats}${mods}</div></button>`;
   }
   function skillsView(mid) {
     const m = D.masteries.find((x)=>x.id===mid)||D.masteries[0];
     const raw = D.skills[m.id];
     const actives = Array.isArray(raw) ? raw.filter((n)=>n.type!=="passive") : ((raw && raw.actives) || []);
     const passives = Array.isArray(raw) ? raw.filter((n)=>n.type==="passive") : ((raw && raw.passives) || []);
+    const cols = [[],[],[],[]];
+    passives.forEach((n,i) => cols[i % 4].push(n));
+    const board = (actives.length || passives.length) ? `<div class="board">${actives.length?`<div class="board-rail">${actives.map(skillNode).join("")}</div>`:""}${passives.length?`<div class="board-cols">${["I","II","III","IV"].map((lab,i)=>`<div class="board-col"><h3>${lab}</h3>${cols[i].map(skillNode).join("")}</div>`).join("")}</div>`:""}</div>` : "<p class='meta'>No nodes logged.</p>";
     return `<h1>Skill trees</h1>
-      <p class="warn">Rogue logged from client screenshots. Other masteries still stubs.</p>
+      <p class="warn">Schematic of the client tree. Hover a node for modifiers. Overview shot needed to snap positions 1:1.</p>
       <div class="filters">${D.masteries.map((x)=>`<a href="#/skills/${x.id}"><button class="${x.id===m.id?"on":""}">${x.name}</button></a>`).join("")}</div>
       <h2>${m.name} <span class="meta">${m.tag}</span></h2>
       ${raw && raw.source ? `<p class="meta">${raw.source}</p>` : ""}
-      ${actives.length ? `<h2>Actives / auras</h2><div class="tree">${actives.map(skillCard).join("")}</div>` : ""}
-      ${passives.length ? `<h2>Passives</h2><div class="tree">${passives.map(skillCard).join("")}</div>` : ""}
+      ${board}
       <h2>Dual-mastery classes</h2>
       <div class="grid">${D.classes.map((c)=>`<div class="card"><h3>${c.name}</h3><div class="meta">${c.a} + ${c.b}</div></div>`).join("")}</div>`;
   }
