@@ -45,24 +45,16 @@ table { width: 100%; border-collapse: collapse; font-size: 14px; }
 th, td { text-align: left; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--line); vertical-align: baseline; }
 th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
 table.drops { table-layout: fixed; }
-table.drops th:nth-child(1),
-table.drops td:nth-child(1) { width: auto; }
-table.drops th:nth-child(2),
-table.drops td:nth-child(2) { width: 56px; text-align: left; font-variant-numeric: tabular-nums; }
-table.drops th:nth-child(3),
-table.drops td:nth-child(3) { width: 168px; text-align: left; font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.drops th:nth-child(2), table.drops td:nth-child(2) { width: 56px; font-variant-numeric: tabular-nums; }
+table.drops th:nth-child(3), table.drops td:nth-child(3) { width: 168px; font-variant-numeric: tabular-nums; white-space: nowrap; }
 details.ares table { table-layout: fixed; }
-details.ares table th:nth-child(2),
-details.ares table td:nth-child(2) { width: 56px; text-align: left; font-variant-numeric: tabular-nums; }
-details.ares table th:nth-child(3),
-details.ares table td:nth-child(3) { width: 168px; text-align: left; font-variant-numeric: tabular-nums; white-space: nowrap; }
+details.ares table th:nth-child(2), details.ares table td:nth-child(2) { width: 56px; font-variant-numeric: tabular-nums; }
+details.ares table th:nth-child(3), details.ares table td:nth-child(3) { width: 168px; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .statrow { display: flex; gap: 18px; flex-wrap: wrap; margin: 16px 0; }
 .stat { background: var(--panel); border: 1px solid var(--line); padding: 12px 16px; min-width: 120px; }
 .stat b { display: block; font-size: 22px; color: var(--gold); }
 .filters { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0 18px; }
-.filters button {
-  background: #1c1813; color: var(--ink); border: 1px solid var(--line); padding: 6px 10px; cursor: pointer;
-}
+.filters button { background: #1c1813; color: var(--ink); border: 1px solid var(--line); padding: 6px 10px; cursor: pointer; }
 .filters button.on { border-color: var(--gold); color: var(--gold); }
 .item-name.epic { color: var(--epic); }
 .item-name.infrequent { color: var(--infreq); }
@@ -73,6 +65,21 @@ details.ares table td:nth-child(3) { width: 168px; text-align: left; font-varian
 .node { background: #1a1612; border: 1px solid var(--line); padding: 10px; }
 .node.active { border-color: #b45309; }
 .node .tier { font-size: 11px; color: var(--muted); }
+.board { background: radial-gradient(ellipse at 50% 0%, #2a2218 0%, transparent 55%), linear-gradient(#14110d, #0c0b09); border: 1px solid #3a3228; border-radius: 10px; padding: 16px 14px 22px; margin: 12px 0 28px; }
+.board-rail { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 18px; }
+.board-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.board-col h3 { margin: 0 0 10px; text-align: center; font-size: 12px; letter-spacing: .14em; color: var(--gold); }
+.sk { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; background: transparent; border: 0; color: var(--ink); cursor: pointer; width: 100%; padding: 6px 4px 10px; }
+.sk-icon { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 700; background: radial-gradient(circle at 35% 30%, #3a3228, #1a1612); border: 2px solid #5c4e38; color: #e8dcc4; }
+.sk.active-skill .sk-icon { width: 64px; height: 64px; border-color: #c9a227; box-shadow: 0 0 0 3px #c9a22733, 0 0 18px #c9a22744; }
+.sk.sustained .sk-icon { border-color: #86efac; color: #86efac; }
+.sk.passive-skill .sk-icon { border-color: #6b5a40; }
+.sk-name { font-size: 11px; text-align: center; line-height: 1.2; color: #d6c7a6; }
+.sk-tip { display: none; position: absolute; z-index: 6; left: 50%; top: calc(100% - 4px); transform: translateX(-50%); width: min(320px, 70vw); background: #1c1813; border: 1px solid var(--gold); border-radius: 6px; padding: 10px 12px; text-align: left; box-shadow: 0 10px 30px #000a; }
+.sk:hover .sk-tip, .sk:focus .sk-tip { display: block; }
+.sk-tip strong { color: var(--gold); }
+.sk-tip .mods { margin: 6px 0 0; font-size: 12px; }
+@media (max-width: 800px) { .board-rail, .board-cols { grid-template-columns: repeat(2, 1fr); } }
 .warn { color: #f59e0b; font-size: 13px; }
 .boss-head h1 { font-size: 34px; letter-spacing: .02em; }
 .boss-hero { display: grid; grid-template-columns: 280px 1fr; gap: 18px; margin: 18px 0 22px; }
