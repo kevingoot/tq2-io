@@ -10,7 +10,8 @@
   function itemLink(id) {
     const it = itemById[id];
     if (!it) return id;
-    return '<a class="item-name ' + it.rarity + '" href="#/item/' + it.id + '">' + it.name + "</a>";
+    const href = it.aliasOf ? it.aliasOf : it.id;
+    return '<a class="item-name ' + it.rarity + '" href="#/item/' + href + '">' + it.name + "</a>";
   }
   function sampleOf(b) { return (b.samples && b.samples[0]) || null; }
   function sampleByAres(b, tier) {
@@ -83,28 +84,36 @@
       <h2>Not remnant tables</h2>
       <ul class="muted-list">${(D.excluded || []).map((e) => `<li><strong>${e.name}</strong> \u2014 ${e.reason}</li>`).join("")}</ul>`;
   }
+  function isBase(i) {
+    return !i.aliasOf && (i.unique || i.rarity === "epic" || i.rarity === "infrequent");
+  }
   function itemsView(filter) {
-    let list = D.items;
-    if (filter && filter !== "all") list = list.filter((i) => i.rarity === filter);
+    let list = D.items.filter((i) => !i.aliasOf);
+    if (!filter || filter === "all") list = list.filter(isBase);
+    else if (filter === "unique" || filter === "epic") list = list.filter((i) => i.unique || i.rarity === "epic");
+    else list = list.filter((i) => i.rarity === filter);
     return `<h1>Items</h1>
-      <div class="filters">${["all","epic","named-essence","infrequent","off-table"].map((f) =>
-        `<a href="#/items/${f}"><button data-f="${f}" class="${(!filter || filter==="all") && f==="all" || filter===f ? "on":""}">${f}</button></a>`).join("")}</div>
-      <table><thead><tr><th>Name</th><th>Rarity</th><th>Slot</th><th>Notes</th></tr></thead><tbody>
-      ${list.map((i) => `<tr><td>${itemLink(i.id)}</td><td><span class="pill r-${i.rarity.startsWith("epic")?"epic":i.rarity}">${i.rarity}</span></td><td>${i.slot||""}</td><td class="meta">${i.notes||""}</td></tr>`).join("")}
+      <p class="lede">Bases only. Uniques are one page each. Infrequents are one page per base; rolled names live on that page.</p>
+      <div class="filters">${["all","unique","infrequent","named-essence"].map((f) =>
+        `<a href="#/items/${f}"><button data-f="${f}" class="${(!filter || filter==="all") && f==="all" || filter===f || ((filter==="epic") && f==="unique") ? "on":""}">${f}</button></a>`).join("")}</div>
+      <table><thead><tr><th>Name</th><th>Type</th><th>Slot</th><th>Variants seen</th></tr></thead><tbody>
+      ${list.map((i) => `<tr><td>${itemLink(i.id)}</td><td><span class="pill r-${i.rarity.startsWith("epic")||i.unique?"epic":i.rarity}">${i.unique?"unique":i.rarity}</span></td><td>${i.slot||""}</td><td class="meta">${(i.variants&&i.variants.length)?(i.variants.length+" logged"):(i.unique?"unique base":"")}</td></tr>`).join("")}
       </tbody></table>`;
   }
   function itemView(id) {
-    const i = itemById[id];
+    let i = itemById[id];
     if (!i) return "<p>Unknown item.</p>";
+    if (i.aliasOf && itemById[i.aliasOf]) i = itemById[i.aliasOf];
     const sources = [];
     D.bosses.forEach((b) => (b.samples || []).forEach((s) => {
-      (s.drops || []).forEach((d) => { if (d.item === id) sources.push({ boss: b, sample: s, drop: d }); });
+      (s.drops || []).forEach((d) => { if (d.item === i.id || (itemById[d.item] && itemById[d.item].aliasOf === i.id)) sources.push({ boss: b, sample: s, drop: d }); });
     }));
     return `<p class="meta"><a href="#/items">Items</a></p>
       <h1 class="item-name ${i.rarity}">${i.name}</h1>
       <p><span class="pill r-${i.rarity.startsWith("epic")?"epic":i.rarity}">${i.rarity}</span> ${i.slot||""} ${i.unique?"\u00b7 unique":""}</p>
       ${i.notes?`<p class="lede">${i.notes}</p>`:""}
       ${i.mods?`<ul class="mods">${i.mods.map((m)=>`<li>${m}</li>`).join("")}</ul>`:""}
+      ${i.variants&&i.variants.length?`<h2>Found variants</h2><table><thead><tr><th>Rolled name</th><th>Seen</th><th>Flag</th></tr></thead><tbody>${i.variants.map((v)=>`<tr><td>${v.name}</td><td>${v.seen||""}</td><td>${v.flag||""}</td></tr>`).join("")}</tbody></table>`:""}
       <h2>Observed sources</h2>
       ${sources.length?`<table><thead><tr><th>Boss</th><th>Sample</th><th>Rate</th></tr></thead><tbody>
         ${sources.map((s)=>`<tr><td><a href="#/boss/${s.boss.id}">${s.boss.name}</a></td><td>${s.sample.label} (${s.sample.kills})</td><td>${rate(s.drop.count,s.sample.kills)}${s.drop.flag?" \u00b7 "+s.drop.flag:""}</td></tr>`).join("")}
@@ -207,7 +216,7 @@
     if (!box) { box = document.createElement("div"); box.id = "results"; box.className = "results"; document.body.appendChild(box); }
     if (!term) { box.style.display = "none"; return; }
     const hits = [
-      ...D.items.filter((i) => i.name.toLowerCase().includes(term)).map((i) => ({ href: "#/item/" + i.id, label: i.name })),
+      ...D.items.filter((i) => i.name.toLowerCase().includes(term)).map((i) => ({ href: "#/item/" + (i.aliasOf || i.id), label: i.name })),
       ...D.bosses.filter((b) => b.name.toLowerCase().includes(term)).map((b) => ({ href: "#/boss/" + b.id, label: b.name + " (boss)" }))
     ].slice(0, 12);
     box.innerHTML = hits.map((h) => `<a href="${h.href}">${h.label}</a>`).join("") || "<a>No hits</a>";
