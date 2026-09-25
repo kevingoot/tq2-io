@@ -49,18 +49,20 @@ th, td { text-align: left; padding: 8px 10px 8px 0; border-bottom: 1px solid var
 .mods { margin: 8px 0 0; padding-left: 18px; color: #d6c7a6; }
 .board {
   background: radial-gradient(ellipse at 50% 0%, #2a2218 0%, transparent 55%), linear-gradient(#14110d, #0c0b09);
-  border: 1px solid #3a3228; border-radius: 10px; padding: 18px 20px 22px; margin: 12px 0;
+  border: 1px solid #3a3228; border-radius: 10px; padding: 18px 20px 28px; margin: 12px 0;
+  overflow: visible;
 }
-.mastery { display: grid; grid-template-columns: 1fr 1.35fr; gap: 12px 32px; align-items: start; }
+.mastery { display: grid; grid-template-columns: 1fr 1.35fr; gap: 12px 32px; align-items: start; overflow: visible; }
 .tier-rail { display: none; }
-.act-tree, .pas-tree { display: flex; flex-direction: column; gap: 14px; }
+.act-tree, .pas-tree { display: flex; flex-direction: column; gap: 14px; overflow: visible; }
 .act-tree { flex-direction: column-reverse; }
-.act-row, .pas-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 10px; }
+.act-row, .pas-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 10px; overflow: visible; }
 .sk {
   position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px;
   background: transparent; border: 0; color: var(--ink); cursor: pointer;
-  width: 92px; flex: 0 0 92px; padding: 4px 2px 8px;
+  width: 92px; flex: 0 0 92px; padding: 4px 2px 8px; overflow: visible; z-index: 1;
 }
+.sk:hover { z-index: 30; }
 .sk-icon {
   width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center;
   font-size: 11px; font-weight: 700; background: radial-gradient(circle at 35% 30%, #3a3228, #1a1612);
@@ -70,16 +72,31 @@ th, td { text-align: left; padding: 8px 10px 8px 0; border-bottom: 1px solid var
 .sk.sustained .sk-icon { border-color: #86efac; color: #86efac; }
 .sk.passive-skill .sk-icon { border-color: #6b5a40; }
 .sk-name { font-size: 11px; text-align: center; line-height: 1.2; color: #d6c7a6; }
-.sk-tip, .sk-hover, .sk-full { display: none !important; }
 .sk:hover .sk-name { color: var(--gold); }
-.skill-detail { margin: 10px 0 24px; padding: 14px 16px; background: #1c1813; border: 1px solid var(--gold); border-radius: 8px; }
-.skill-detail.hidden { display: none; }
-.skill-detail strong { color: var(--gold); display: block; margin-bottom: 6px; font-size: 18px; }
+.sk-tip, .sk-hover {
+  display: none;
+  position: absolute;
+  z-index: 40;
+  left: 50%;
+  top: calc(100% - 2px);
+  transform: translateX(-50%);
+  width: 280px;
+  max-height: 360px;
+  overflow: auto;
+  background: #1c1813;
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  padding: 10px 12px;
+  text-align: left;
+  box-shadow: 0 12px 28px #000c;
+  pointer-events: none;
+}
+.sk:hover .sk-tip, .sk:focus .sk-tip, .sk:hover .sk-hover { display: block; }
+.sk-tip strong, .sk-hover strong { color: var(--gold); }
+.sk-full { display: none; }
 .warn { color: #f59e0b; font-size: 13px; }
 .boss-hero { display: grid; grid-template-columns: 280px 1fr; gap: 18px; margin: 18px 0 22px; }
-@media (max-width: 800px) {
-  .mastery { grid-template-columns: 1fr; }
-}
+@media (max-width: 800px) { .mastery { grid-template-columns: 1fr; } }
 .portrait { background: #14110e; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .portrait-img { width: 100%; height: 240px; object-fit: cover; display: block; }
 .infobox { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; }
