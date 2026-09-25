@@ -55,7 +55,7 @@ th, td { text-align: left; padding: 8px 10px 8px 0; border-bottom: 1px solid var
 .mastery {
   display: grid;
   grid-template-columns: 28px minmax(260px, 0.95fr) minmax(400px, 1.35fr);
-  gap: 6px 16px;
+  gap: 0 16px;
   align-items: stretch;
   min-height: 560px;
   overflow: visible;
@@ -63,12 +63,17 @@ th, td { text-align: left; padding: 8px 10px 8px 0; border-bottom: 1px solid var
 .tier-rail {
   display: flex;
   flex-direction: column;
-  justify-content: stretch;
   color: var(--gold);
   font-size: 13px;
   font-weight: 700;
   letter-spacing: .14em;
-  padding-top: 18%;
+}
+.tier-rail::before {
+  content: "V";
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .tier-rail span {
   flex: 1 1 0;
@@ -79,11 +84,13 @@ th, td { text-align: left; padding: 8px 10px 8px 0; border-bottom: 1px solid var
 .act-tree, .pas-tree {
   display: flex;
   flex-direction: column;
-  justify-content: stretch;
   overflow: visible;
 }
-.act-tree { flex-direction: column-reverse; padding-top: 18%; }
-.pas-tree { position: relative; }
+.act-tree { flex-direction: column-reverse; }
+.act-tree::after {
+  content: "";
+  flex: 1 1 0;
+}
 .act-row, .pas-row {
   flex: 1 1 0;
   display: flex;
@@ -95,20 +102,6 @@ th, td { text-align: left; padding: 8px 10px 8px 0; border-bottom: 1px solid var
   position: relative;
 }
 .pas-row.cols-2 { justify-content: center; gap: 28px; }
-.pas-row:first-child {
-  padding-left: 22px;
-}
-.pas-row:first-child::before {
-  content: "V";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--gold);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: .14em;
-}
 .sk {
   position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px;
   background: transparent; border: 0; color: var(--ink); cursor: pointer;
@@ -139,8 +132,7 @@ th, td { text-align: left; padding: 8px 10px 8px 0; border-bottom: 1px solid var
 @media (max-width: 860px) {
   .mastery { grid-template-columns: 24px 1fr; min-height: 0; }
   .pas-tree { grid-column: 1 / -1; min-height: 0; }
-  .act-row, .pas-row, .tier-rail span { flex: 0 0 auto; padding: 8px 0; }
-  .act-tree, .tier-rail { padding-top: 0; }
+  .act-row, .pas-row, .tier-rail span, .tier-rail::before, .act-tree::after { flex: 0 0 auto; padding: 8px 0; }
 }
 .portrait { background: #14110e; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .portrait-img { width: 100%; height: 240px; object-fit: cover; display: block; }
