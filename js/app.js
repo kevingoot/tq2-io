@@ -170,20 +170,35 @@
     const passives = Array.isArray(raw) ? raw.filter((n)=>n.type==="passive") : ((raw && raw.passives) || []);
     const byName = {};
     actives.concat(passives).forEach((n) => { byName[n.name] = n; });
-    const actRows = (raw && raw.layout && raw.layout.actives) || [
-      actives.slice(0, 2).map((n) => n.name),
-      actives.slice(2, 5).map((n) => n.name),
-      actives.slice(5, 8).map((n) => n.name),
-      actives.slice(8).map((n) => n.name)
-    ];
-    const pasRows = (raw && raw.layout && raw.layout.passives) || (function () {
-      const rows = [];
-      for (let i = 0; i < passives.length; i += 5) rows.push(passives.slice(i, i + 5).map((n) => n.name));
-      return rows;
-    })();
-    const board = (actives.length || passives.length) ? `<div class="board mastery"><div class="tier-rail"><span>IV</span><span>III</span><span>II</span><span>I</span></div><div class="act-tree">${actRows.map((row) => `<div class="act-row">${row.map((name) => skillNode(byName[name] || { name: name, type: "active" })).join("")}</div>`).join("")}</div><div class="pas-tree">${pasRows.map((row) => `<div class="pas-row cols-${row.length}">${row.map((name) => skillNode(byName[name] || { name: name, type: "passive" })).join("")}</div>`).join("")}</div></div>` : "<p class='meta'>No nodes logged.</p>";
+    const findN = (re) => actives.find((n) => re.test(n.name));
+    let board;
+    if (m.id === "core") {
+      const pa = findN(/^Primary Attack$/) || actives[0];
+      const pam = findN(/Melee/) || actives[1];
+      const bar = findN(/Barrier/);
+      const dodge = findN(/Dodge/);
+      board = `<div class="board core-board"><div class="core-ring">
+        <div class="core-slot nw">${skillNode(bar || { name: "Barrier", type: "sustained" })}</div>
+        <div class="core-slot ne">${skillNode(dodge || { name: "Dodge", type: "active" })}</div>
+        <div class="core-slot sw">${skillNode(pa || { name: "Primary Attack", type: "active" })}</div>
+        <div class="core-slot se">${skillNode(pam || { name: "Primary Attack (Melee)", type: "active" })}</div>
+      </div></div>`;
+    } else {
+      const actRows = (raw && raw.layout && raw.layout.actives) || [
+        actives.slice(0, 2).map((n) => n.name),
+        actives.slice(2, 5).map((n) => n.name),
+        actives.slice(5, 8).map((n) => n.name),
+        actives.slice(8).map((n) => n.name)
+      ];
+      const pasRows = (raw && raw.layout && raw.layout.passives) || (function () {
+        const rows = [];
+        for (let i = 0; i < passives.length; i += 5) rows.push(passives.slice(i, i + 5).map((n) => n.name));
+        return rows;
+      })();
+      board = (actives.length || passives.length) ? `<div class="board mastery"><div class="tier-rail"><span>IV</span><span>III</span><span>II</span><span>I</span></div><div class="act-tree">${actRows.map((row) => `<div class="act-row">${row.map((name) => skillNode(byName[name] || { name: name, type: "active" })).join("")}</div>`).join("")}</div><div class="pas-tree">${pasRows.map((row) => `<div class="pas-row cols-${row.length}">${row.map((name) => skillNode(byName[name] || { name: name, type: "passive" })).join("")}</div>`).join("")}</div></div>` : "<p class='meta'>No nodes logged.</p>";
+    }
     return `<h1>Skill trees</h1>
-      <p class="warn">Earth and Rogue boards locked from in-client screenshots 2026-09-24. Hover a node for modifiers. Core is the shared Primary / Barrier / Dodge row.</p>
+      <p class="warn">Earth and Rogue boards locked from in-client screenshots 2026-09-24. Hover a node for modifiers. Core is the shared Primary / Barrier / Dodge circle.</p>
       <div class="filters">${D.masteries.map((x)=>`<a href="#/skills/${x.id}"><button class="${x.id===m.id?"on":""}">${x.name}</button></a>`).join("")}</div>
       <h2>${m.name} <span class="meta">${m.tag}</span></h2>
       ${raw && raw.source ? `<p class="meta">${raw.source}</p>` : ""}
