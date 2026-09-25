@@ -5,7 +5,6 @@
   --muted: #9a8b70;
   --gold: #c9a227;
   --epic: #c084fc;
-  --unique: #c084fc;
   --infreq: #86efac;
   --named: #fbbf24;
   --off: #fb7185;
@@ -14,11 +13,7 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 "Segoe UI", system-ui, sans-serif; }
 a { color: var(--gold); text-decoration: none; }
-a:hover { text-decoration: underline; }
-.top {
-  display: flex; gap: 18px; align-items: center; padding: 12px 20px;
-  border-bottom: 1px solid var(--line); background: #120f0c; position: sticky; top: 0; z-index: 5;
-}
+.top { display: flex; gap: 18px; align-items: center; padding: 12px 20px; border-bottom: 1px solid var(--line); background: #120f0c; position: sticky; top: 0; z-index: 5; }
 .brand { font-weight: 700; letter-spacing: .08em; color: var(--gold); font-size: 18px; }
 nav { display: flex; gap: 14px; }
 .search { margin-left: auto; background: #1c1813; border: 1px solid var(--line); color: var(--ink); padding: 8px 12px; width: min(420px, 42vw); border-radius: 4px; }
@@ -26,11 +21,11 @@ nav { display: flex; gap: 14px; }
 footer { border-top: 1px solid var(--line); color: var(--muted); padding: 16px 20px; font-size: 12px; }
 h1 { font-size: 28px; margin: 0 0 8px; }
 h2 { font-size: 18px; color: var(--gold); margin: 28px 0 10px; }
-.lede { color: var(--muted); max-width: 62ch; }
+.lede, .meta { color: var(--muted); }
+.meta { font-size: 12px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
 .card { background: var(--panel); border: 1px solid var(--line); padding: 14px; border-radius: 6px; }
 .card h3 { margin: 4px 0 6px; font-size: 16px; }
-.meta { color: var(--muted); font-size: 12px; }
 .pill { display: inline-block; font-size: 11px; padding: 2px 7px; border-radius: 99px; margin-right: 4px; }
 .pill.act { background: #2a241c; color: var(--gold); }
 .r-epic { color: #1a1024; background: var(--epic); }
@@ -41,7 +36,6 @@ h2 { font-size: 18px; color: var(--gold); margin: 28px 0 10px; }
 .r-stub, .r-verify { color: #1c1400; background: #a8a29e; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
 th, td { text-align: left; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--line); }
-th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; }
 .statrow { display: flex; gap: 18px; flex-wrap: wrap; margin: 16px 0; }
 .stat { background: var(--panel); border: 1px solid var(--line); padding: 12px 16px; min-width: 120px; }
 .stat b { display: block; font-size: 22px; color: var(--gold); }
@@ -55,29 +49,20 @@ th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: upp
 .mods { margin: 8px 0 0; padding-left: 18px; color: #d6c7a6; }
 .board {
   background: radial-gradient(ellipse at 50% 0%, #2a2218 0%, transparent 55%), linear-gradient(#14110d, #0c0b09);
-  border: 1px solid #3a3228; border-radius: 10px; padding: 16px 14px 22px; margin: 12px 0 12px;
-  display: grid; grid-template-columns: minmax(240px, 0.9fr) minmax(320px, 1.2fr); gap: 18px 28px; align-items: start;
+  border: 1px solid #3a3228; border-radius: 10px; padding: 18px 20px 22px; margin: 12px 0;
 }
-.tree-label { color: var(--gold); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 10px; }
-.tree-col { min-width: 0; }
-.tier-line { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-.tier-tag { width: 18px; color: var(--gold); font-size: 11px; }
-.node-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 6px; flex: 1; margin-bottom: 10px; }
-.skill-detail { margin: 8px 0 24px; padding: 14px 16px; background: #1c1813; border: 1px solid var(--gold); border-radius: 8px; }
-.skill-detail.hidden { display: none; }
-.skill-detail strong { color: var(--gold); display: block; margin-bottom: 6px; font-size: 18px; }
-.mastery { display: grid; grid-template-columns: 28px minmax(200px, 1fr) minmax(280px, 1.45fr); gap: 8px 14px; align-items: start; }
-.tier-rail { display: flex; flex-direction: column; justify-content: space-between; color: var(--gold); font-size: 11px; padding: 10px 0; }
-.act-tree, .pas-tree { display: flex; flex-direction: column; gap: 10px; }
+.mastery { display: grid; grid-template-columns: 1fr 1.35fr; gap: 12px 32px; align-items: start; }
+.tier-rail { display: none; }
+.act-tree, .pas-tree { display: flex; flex-direction: column; gap: 14px; }
 .act-tree { flex-direction: column-reverse; }
-.act-row, .pas-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; }
+.act-row, .pas-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 10px; }
 .sk {
   position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px;
   background: transparent; border: 0; color: var(--ink); cursor: pointer;
-  width: 88px; flex: 0 0 88px; padding: 6px 4px 10px;
+  width: 92px; flex: 0 0 92px; padding: 4px 2px 8px;
 }
 .sk-icon {
-  width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center;
+  width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center;
   font-size: 11px; font-weight: 700; background: radial-gradient(circle at 35% 30%, #3a3228, #1a1612);
   border: 2px solid #5c4e38; color: #e8dcc4;
 }
@@ -86,12 +71,14 @@ th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: upp
 .sk.passive-skill .sk-icon { border-color: #6b5a40; }
 .sk-name { font-size: 11px; text-align: center; line-height: 1.2; color: #d6c7a6; }
 .sk-tip, .sk-hover, .sk-full { display: none !important; }
-.sk.open .sk-icon { box-shadow: 0 0 0 2px var(--gold); }
+.sk:hover .sk-name { color: var(--gold); }
+.skill-detail { margin: 10px 0 24px; padding: 14px 16px; background: #1c1813; border: 1px solid var(--gold); border-radius: 8px; }
+.skill-detail.hidden { display: none; }
+.skill-detail strong { color: var(--gold); display: block; margin-bottom: 6px; font-size: 18px; }
 .warn { color: #f59e0b; font-size: 13px; }
 .boss-hero { display: grid; grid-template-columns: 280px 1fr; gap: 18px; margin: 18px 0 22px; }
 @media (max-width: 800px) {
-  .board, .mastery { grid-template-columns: 1fr; }
-  .pas-tree { grid-column: 1 / -1; }
+  .mastery { grid-template-columns: 1fr; }
 }
 .portrait { background: #14110e; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .portrait-img { width: 100%; height: 240px; object-fit: cover; display: block; }
