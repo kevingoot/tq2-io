@@ -4,7 +4,7 @@ window.TQ2 = {
     status: "Early Access",
     chapter: "4 Wild Lands",
     cap: 55,
-    updated: "2026-09-24",
+    updated: "2026-09-25",
     method: "Full-pile screenshot per remnant kill. Loot logged: green + purple only. Gold band recorded. Named pages vs color counts."
   },
   masteries: [
@@ -42,11 +42,11 @@ window.TQ2 = {
       kind: "optional",
       image: "img/hippokampos.jpg",
       samples: [{
-        id: "hippo-55-0", label: "55 +0", status: "open", kills: 40, date: "2026-09-24",
-        gold: "7.4k-12.2k (most 8.0-10.8k)", epics: 16, infrequents: 13, namedEssences: 3,
-        notes: "Scapula count-only going forward. Two double-Scapula piles. Shadowsting off-table. Earthen Talisman is first Earth unique on this table.",
+        id: "hippo-55-0", label: "55 +0", status: "open", kills: 54, date: "2026-09-24",
+        gold: "7.4k-12.9k (most 8.0-10.8k)", epics: 21, infrequents: 15, namedEssences: 3,
+        notes: "Scapula count-only going forward. Three double-Scapula piles. Shadowsting off-table. Earthen Talisman is first Earth unique on this table.",
         drops: [
-          { item: "hippokampos-scapula", count: 13 },
+          { item: "hippokampos-scapula", count: 18 },
           { item: "chaos-cube", count: 1 },
           { item: "shadowsting", count: 1, flag: "off-table" },
           { item: "earthen-talisman", count: 1 },
@@ -60,7 +60,8 @@ window.TQ2 = {
           "Tormenting Studded Spirit Scepter of Knowledge","Piercing Star Mace of Zelus",
           "Venomous Fume Scepter of Crippling","Savage Fume Scepter of Crippling",
           "Invoker's Force Crescent Staff of Clarity",
-          "Freezing Studded Spirit Scepter of Wisdom","Malignant Rot-Cleaver of Precision"
+          "Freezing Studded Spirit Scepter of Wisdom","Malignant Rot-Cleaver of Precision",
+          "Invoker's Star Mace of Consistency","Empowered Essence Sword of Weakening"
         ]
       }]
     },
@@ -147,11 +148,11 @@ window.TQ2 = {
     { id: "essence-typhon-fang", name: "Essence of Typhon's Serpentine Fang", rarity: "named-essence", slot: "relic" },
     { id: "essence-iron-will-ajax", name: "Essence of Iron Will of Ajax", rarity: "named-essence", slot: "relic" },
     { id: "empowered-pyromancer-sword", name: "Empowered Essence Sword of the Pyromancer", rarity: "off-table", slot: "sword", aliasOf: "essence-sword" },
-    { id: "essence-sword", name: "Essence Sword", rarity: "infrequent", slot: "sword", notes: "Shared infrequent sword. Shows on Hippo / Pan / Arachne.", variants: [{ name: "Essence Sword of Wisdom", seen: "Hippokampos 55 +0" }, { name: "Essence Sword of Clarity", seen: "Hippokampos 55 +0" }, { name: "Essence Sword of Excellence", seen: "Hippokampos 55 +0" }, { name: "Essence Sword of the Invoker", seen: "Hippokampos 55 +0" }, { name: "Empowered Essence Sword of the Pyromancer", seen: "Pan 55 +0", flag: "off-table" }, { name: "Empowered Essence Sword of Clarity", seen: "Arachne 55 +0", flag: "always-drops sword" }] },
+    { id: "essence-sword", name: "Essence Sword", rarity: "infrequent", slot: "sword", notes: "Shared infrequent sword. Shows on Hippo / Pan / Arachne.", variants: [{ name: "Essence Sword of Wisdom", seen: "Hippokampos 55 +0" }, { name: "Essence Sword of Clarity", seen: "Hippokampos 55 +0" }, { name: "Essence Sword of Excellence", seen: "Hippokampos 55 +0" }, { name: "Essence Sword of the Invoker", seen: "Hippokampos 55 +0" }, { name: "Empowered Essence Sword of the Pyromancer", seen: "Pan 55 +0", flag: "off-table" }, { name: "Empowered Essence Sword of Clarity", seen: "Arachne 55 +0", flag: "always-drops sword" }, { name: "Empowered Essence Sword of Weakening", seen: "Hippokampos 55 +0" }] },
     { id: "sharptooth-greaves", name: "Sharptooth Greaves", rarity: "infrequent", slot: "boots", variants: [{ name: "Unscorched Sharptooth Greaves of Sanctuary", seen: "Hippokampos 55 +0" }] },
     { id: "benthic-wand", name: "Benthic Wand", rarity: "infrequent", slot: "wand", variants: [{ name: "Empowered Benthic Wand of Precision", seen: "Hippokampos 55 +0" }] },
     { id: "studded-spirit-scepter", name: "Studded Spirit Scepter", rarity: "infrequent", slot: "scepter", variants: [{ name: "Tormenting Studded Spirit Scepter of Knowledge", seen: "Hippokampos 55 +0" }, { name: "Freezing Studded Spirit Scepter of Wisdom", seen: "Hippokampos 55 +0" }] },
-    { id: "star-mace", name: "Star Mace", rarity: "infrequent", slot: "mace", variants: [{ name: "Piercing Star Mace of Zelus", seen: "Hippokampos 55 +0" }] },
+    { id: "star-mace", name: "Star Mace", rarity: "infrequent", slot: "mace", variants: [{ name: "Piercing Star Mace of Zelus", seen: "Hippokampos 55 +0" }, { name: "Invoker's Star Mace of Consistency", seen: "Hippokampos 55 +0" }] },
     { id: "fume-scepter", name: "Fume Scepter", rarity: "infrequent", slot: "scepter", variants: [{ name: "Venomous Fume Scepter of Crippling", seen: "Hippokampos 55 +0" }, { name: "Savage Fume Scepter of Crippling", seen: "Hippokampos 55 +0" }] },
     { id: "force-crescent-staff", name: "Force Crescent Staff", rarity: "infrequent", slot: "staff", variants: [{ name: "Invoker's Force Crescent Staff of Clarity", seen: "Hippokampos 55 +0" }] },
     { id: "rot-cleaver", name: "Rot-Cleaver", rarity: "infrequent", slot: "sword", notes: "Infrequent sword base.", variants: [{ name: "Malignant Rot-Cleaver of Precision", seen: "Hippokampos 55 +0" }] }
