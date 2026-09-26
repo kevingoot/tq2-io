@@ -40,7 +40,7 @@ window.TQ2 = {
       zone: "Erana Ruins",
       waypoint: "Erana Ruins",
       kind: "optional",
-      image: "img/hippokampos.jpg",
+      image: "img/hippokampos.png",
       samples: [{
         id: "hippo-55-0", label: "55 +0", status: "open", kills: 78, date: "2026-09-25",
         gold: "7.4k-12.9k (most 8.0-10.8k)", epics: 29, infrequents: 19, namedEssences: 3,
