@@ -31,9 +31,3 @@ Hash routes work on Pages with no extra config.
 - `+0` and `+3` are different samples.
 - Protocol: screenshot full pile every remnant kill; log green + purple; gold band; named pages vs color counts.
 - Off-table / shared-pool uniques get `flag: "off-table"` until a second source confirms.
-
-## Edit at work (github.com only)
-
-- Change numbers in `js/data.js`
-- Commit on `main` in the web editor
-- Pages rebuilds in a minute
