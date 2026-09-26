@@ -1,2 +1,4 @@
 inbox/
 *.png
+!img/*.png
+!img/**/*.png
