@@ -42,14 +42,15 @@ window.TQ2 = {
       kind: "optional",
       image: "img/hippokampos.jpg",
       samples: [{
-        id: "hippo-55-0", label: "55 +0", status: "open", kills: 62, date: "2026-09-24",
-        gold: "7.4k-12.9k (most 8.0-10.8k)", epics: 23, infrequents: 18, namedEssences: 3,
-        notes: "Scapula count-only going forward. Three double-Scapula piles. Shadowsting off-table. Earthen Talisman is first Earth unique on this table.",
+        id: "hippo-55-0", label: "55 +0", status: "open", kills: 78, date: "2026-09-25",
+        gold: "7.4k-12.9k (most 8.0-10.8k)", epics: 29, infrequents: 19, namedEssences: 3,
+        notes: "Scapula count-only going forward. Three double-Scapula piles. Shadowsting off-table. Earthen Talisman is first Earth unique on this table. Thorny Maul off-table (also seen Pan 55 +0).",
         drops: [
-          { item: "hippokampos-scapula", count: 20 },
+          { item: "hippokampos-scapula", count: 25 },
           { item: "chaos-cube", count: 1 },
           { item: "shadowsting", count: 1, flag: "off-table" },
           { item: "earthen-talisman", count: 1 },
+          { item: "thorny-maul", count: 1, flag: "off-table" },
           { item: "essence-typhon-fang", count: 1 },
           { item: "essence-iron-will-ajax", count: 1 },
           { item: "essence-aegis-athena", count: 1 }
@@ -62,7 +63,8 @@ window.TQ2 = {
           "Invoker's Force Crescent Staff of Clarity",
           "Freezing Studded Spirit Scepter of Wisdom","Malignant Rot-Cleaver of Precision",
           "Invoker's Star Mace of Consistency","Empowered Essence Sword of Weakening",
-          "Unscorched Sharptooth Shell of Renewal","Icy Essence Sword of Clarity","Invoker's Essence Sword of Prowess"
+          "Unscorched Sharptooth Shell of Renewal","Icy Essence Sword of Clarity","Invoker's Essence Sword of Prowess",
+          "Antidotal Sharptooth Cloak of Vitality"
         ]
       }]
     },
@@ -136,7 +138,7 @@ window.TQ2 = {
     { id: "chaos-cube", name: "Chaos Cube", rarity: "epic", slot: "talisman", unique: true, notes: "Lv55 epic talisman." },
     { id: "earthen-talisman", name: "Earthen Talisman", rarity: "epic", slot: "talisman", unique: true, notes: "Lv55 Earth unique. +1 Level to all Earth Passive Skills. First Earth unique on Hippokampos 55 +0.", mods: ["+1 Level to all Earth Passive Skills", "+11% increased Armor", "28% increased Ailment Power", "Poison / stun resistance"] },
     { id: "captains-signet", name: "Captain's Signet", rarity: "epic", slot: "ring", unique: true, notes: "2 in 100 Pan 55 +0. Pool unproven." },
-    { id: "thorny-maul", name: "Thorny Maul", rarity: "epic", slot: "2H mace", unique: true, notes: "Pan 55 +0. Pool unproven." },
+    { id: "thorny-maul", name: "Thorny Maul", rarity: "epic", slot: "1h club", unique: true, notes: "Pan 55 +0 (pool unproven); Hippo 55 +0 off-table. Tooltip confirmed 1h Club Lv 55." },
     { id: "chromatic-staff", name: "Chromatic Staff", rarity: "epic", slot: "staff", unique: true, notes: "Best keep from Pan 55 +0." },
     { id: "ram-bow-ii", name: "Ram Bow II", rarity: "epic", slot: "bow", unique: true, notes: "Pan 55 +0. Pool unproven." },
     { id: "fotia", name: "Fotia", rarity: "epic", slot: "staff", unique: true, notes: "Unique fire staff.", mods: ["+2 Capacity to Fire Skills (Lv50 piece)"] },
@@ -152,6 +154,7 @@ window.TQ2 = {
     { id: "essence-sword", name: "Essence Sword", rarity: "infrequent", slot: "sword", notes: "Shared infrequent sword. Shows on Hippo / Pan / Arachne.", variants: [{ name: "Essence Sword of Wisdom", seen: "Hippokampos 55 +0" }, { name: "Essence Sword of Clarity", seen: "Hippokampos 55 +0" }, { name: "Essence Sword of Excellence", seen: "Hippokampos 55 +0" }, { name: "Essence Sword of the Invoker", seen: "Hippokampos 55 +0" }, { name: "Empowered Essence Sword of the Pyromancer", seen: "Pan 55 +0", flag: "off-table" }, { name: "Empowered Essence Sword of Clarity", seen: "Arachne 55 +0", flag: "always-drops sword" }, { name: "Empowered Essence Sword of Weakening", seen: "Hippokampos 55 +0" }, { name: "Icy Essence Sword of Clarity", seen: "Hippokampos 55 +0" }, { name: "Invoker's Essence Sword of Prowess", seen: "Hippokampos 55 +0" }] },
     { id: "sharptooth-greaves", name: "Sharptooth Greaves", rarity: "infrequent", slot: "boots", variants: [{ name: "Unscorched Sharptooth Greaves of Sanctuary", seen: "Hippokampos 55 +0" }] },
     { id: "sharptooth-shell", name: "Sharptooth Shell", rarity: "infrequent", slot: "torso", variants: [{ name: "Unscorched Sharptooth Shell of Renewal", seen: "Hippokampos 55 +0" }] },
+    { id: "sharptooth-cloak", name: "Sharptooth Cloak", rarity: "infrequent", slot: "shoulders", variants: [{ name: "Antidotal Sharptooth Cloak of Vitality", seen: "Hippokampos 55 +0" }] },
     { id: "benthic-wand", name: "Benthic Wand", rarity: "infrequent", slot: "wand", variants: [{ name: "Empowered Benthic Wand of Precision", seen: "Hippokampos 55 +0" }] },
     { id: "studded-spirit-scepter", name: "Studded Spirit Scepter", rarity: "infrequent", slot: "scepter", variants: [{ name: "Tormenting Studded Spirit Scepter of Knowledge", seen: "Hippokampos 55 +0" }, { name: "Freezing Studded Spirit Scepter of Wisdom", seen: "Hippokampos 55 +0" }] },
     { id: "star-mace", name: "Star Mace", rarity: "infrequent", slot: "mace", variants: [{ name: "Piercing Star Mace of Zelus", seen: "Hippokampos 55 +0" }, { name: "Invoker's Star Mace of Consistency", seen: "Hippokampos 55 +0" }] },

@@ -15,7 +15,7 @@ Hash routes work on Pages with no extra config.
 
 - Item catalog (epic / named essence / off-table)
 - Boss pages with observed rates from remnant samples
-- Seeded: Pan 55 +0 closed (100), Hippokampos 55 +0 open (~62)
+- Seeded: Pan 55 +0 closed (100), Hippokampos 55 +0 open (~78)
 - Skill-tree stubs for Earth, Rogue, Storm, Warfare, Spirit, Forge
 
 ## What v1 is not
